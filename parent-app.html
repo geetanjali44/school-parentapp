@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>CezEdu Parent App</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,Arial,sans-serif;background:#f8fafc;color:#111827}
+button,input,select{font:inherit}
+button{cursor:pointer}
+
+/* LOGIN — PC: split screen / Mobile: top wave */
+.login{
+  min-height:100vh;
+  display:flex;
+  background:#fff;
+  overflow:hidden;
+  padding:0;
+  align-items:stretch;
+  justify-content:stretch;
+}
+.login-wrap{
+  width:100%;
+  max-width:none;
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:minmax(420px,48%) 1fr;
+  background:#fff;
+}
+.parent-login-visual{
+  position:relative;
+  min-height:100vh;
+  background:linear-gradient(145deg,#111827,#334155);
+  display:flex;
+  align-items:center;
+  padding:60px;
+  color:#fff;
+  overflow:hidden;
+}
+.parent-login-visual::after{
+  content:"";
+  position:absolute;
+  top:-8%;
+  right:-115px;
+  width:230px;
+  height:116%;
+  background:#fff;
+  border-radius:50%;
+}
+.parent-login-visual-content{position:relative;z-index:2;max-width:420px}
+.logo{
+  width:58px;height:58px;border-radius:15px;
+  background:rgba(255,255,255,.14);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;font-weight:800;margin:0 0 24px;
+  border:1px solid rgba(255,255,255,.18)
+}
+.parent-login-visual h1{font-size:36px;line-height:1.15;margin:0}
+.parent-login-visual .sub{
+  color:rgba(255,255,255,.72);font-size:14px;line-height:1.7;
+  margin:12px 0 0
+}
+.parent-login-form-side{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  padding:48px 55px
+}
+.parent-login-form{width:100%;max-width:390px}
+.parent-login-form h2{font-size:27px;margin-bottom:7px}
+.parent-login-form .form-subtitle{color:#6b7280;font-size:13px;margin-bottom:30px}
+.field{margin-bottom:17px}
+.field label{display:block;font-size:12px;font-weight:600;color:#374151;margin-bottom:7px}
+.field input{
+  width:100%;height:auto;padding:13px 14px;border:1px solid #d1d5db;
+  border-radius:9px;outline:none;background:#fff
+}
+.field input:focus{border-color:#111827}
+.password{position:relative}.password input{padding-right:70px}
+.show{
+  position:absolute;right:12px;top:50%;transform:translateY(-50%);
+  border:0;background:transparent;color:#64748b;font-size:13px;
+  font-weight:700;padding:5px 3px
+}
+.primary{
+  width:100%;height:auto;border:0;border-radius:9px;padding:13px;
+  background:#111827;color:#fff;font-weight:600
+}
+.msg{
+  display:none;background:#fef2f2;color:#b91c1c;padding:10px;
+  border-radius:8px;font-size:12px;margin-bottom:15px
+}
+
+@media(max-width:700px){
+  .login{display:block}
+  .login-wrap{min-height:100vh;display:block}
+  .parent-login-visual{
+    min-height:285px;padding:42px 24px 72px;align-items:flex-start
+  }
+  .parent-login-visual::after{
+    top:auto;left:-10%;right:auto;bottom:-84px;
+    width:120%;height:128px;border-radius:50% 50% 0 0 / 100% 100% 0 0;
+    background:#fff
+  }
+  .parent-login-visual-content{max-width:330px}
+  .logo{width:50px;height:50px;margin-bottom:18px}
+  .parent-login-visual h1{font-size:28px}
+  .parent-login-form-side{
+  min-height:auto;
+  padding:26px 22px 40px;
+  align-items:flex-start;
+  position:relative;
+  z-index:3;
+  margin-top:-2px;
+
+  background:transparent;
+  border:none;
+  border-radius:0;
+  box-shadow:none;
+}
+  .parent-login-form{max-width:none}
+}
+
+.app{display:none;min-height:100vh;padding-bottom:78px}
+.topbar{height:68px;background:#fff;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;justify-content:space-between;padding:0 18px;position:sticky;top:0;z-index:10}
+.inst{display:flex;align-items:center;gap:10px;min-width:0}
+.inst img,.inst-fallback{width:39px;height:39px;border-radius:10px;object-fit:contain;background:#f1f5f9}
+.inst-fallback{display:flex;align-items:center;justify-content:center;background:#111827;color:#fff;font-weight:800}
+.inst h3{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:210px}
+.inst p{font-size:10px;color:#94a3b8;margin-top:3px}
+.logout{border:0;background:#f1f5f9;border-radius:8px;padding:8px 10px;font-size:11px}
+.content{max-width:850px;margin:auto;padding:22px 18px}
+.page{display:none}.page.active{display:block}
+.child-switch{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:22px}
+.child-switch label{font-size:11px;color:#64748b}
+.child-switch select{border:1px solid #d1d5db;background:#fff;border-radius:8px;padding:8px 10px;max-width:220px}
+.parent-welcome{font-size:22px;font-weight:700;margin-bottom:18px;letter-spacing:-.2px}.parent-welcome span{color:#64748b}@media(max-width:600px){.parent-welcome{font-size:19px;margin-bottom:15px}}.hero{display:flex;align-items:center;gap:15px;padding-bottom:22px;border-bottom:1px solid #e5e7eb}
+.avatar{width:68px;height:68px;border-radius:50%;object-fit:cover;background:#e2e8f0;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800;flex:none}
+.hero h1{font-size:21px}.meta{font-size:11px;color:#64748b;margin-top:6px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:23px 0}
+.stat{border-bottom:1px solid #e5e7eb;padding-bottom:16px}
+.stat span{display:block;font-size:10px;color:#94a3b8}.stat strong{display:block;font-size:20px;margin-top:6px}
+.section{padding:20px 0;border-top:1px solid #e5e7eb}.section:first-of-type{border-top:0}
+.section h2{font-size:15px;margin-bottom:15px}
+.row{display:grid;grid-template-columns:170px 1fr;padding:9px 0;font-size:12px}.row span{color:#94a3b8}.row strong{font-weight:600}
+.notice{padding:35px 10px;text-align:center;color:#94a3b8;font-size:12px}
+.bottom{position:fixed;bottom:0;left:0;right:0;height:66px;background:#fff;border-top:1px solid #e5e7eb;display:flex;z-index:20}
+.nav{flex:1;border:0;background:#fff;font-size:10px;color:#94a3b8}.nav strong{display:block;font-size:17px;margin-bottom:3px}.nav.active{color:#111827;font-weight:700}
+.att-row,.fee-row,.exam{padding:14px 0;border-bottom:1px solid #e5e7eb;font-size:12px}
+.att-row,.fee-head{display:flex;justify-content:space-between;gap:12px}
+.present{color:#15803d}.absent{color:#dc2626}.leave{color:#b45309}
+.exam h3{font-size:14px;margin-bottom:10px}.marks-row{display:grid;grid-template-columns:1fr auto;padding:7px 0;font-size:12px}
+.exam-total{margin-top:10px;padding-top:10px;border-top:1px dashed #d1d5db;display:flex;justify-content:space-between;font-weight:700}
+@media(max-width:600px){
+ .content{padding:18px 15px}.stats{gap:10px}.stat strong{font-size:17px}
+ .row{grid-template-columns:120px 1fr}.inst h3{max-width:160px}
+}
+
+.progress-card{background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:20px}
+.progress-head{display:flex;align-items:center;gap:14px;padding-bottom:18px;border-bottom:1px solid #eee}
+.progress-avatar{width:58px;height:58px;border-radius:50%;object-fit:cover;background:#f3f4f6;display:flex;align-items:center;justify-content:center;font-weight:800}
+.progress-head h3{font-size:17px}.progress-head p{font-size:11px;color:#6b7280;margin-top:4px}
+.progress-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0}
+.progress-summary div{padding:14px 0;border-bottom:1px solid #eee}
+.progress-summary span{display:block;font-size:10px;color:#9ca3af}
+.progress-summary strong{display:block;font-size:20px;margin-top:5px}
+.exam-report{padding:17px 0;border-top:1px solid #eee}
+.exam-report h4{font-size:14px;margin-bottom:10px}
+.report-row{display:grid;grid-template-columns:1fr auto;gap:12px;padding:8px 0;font-size:12px}
+.report-row.total{font-weight:700;border-top:1px solid #eee;margin-top:6px;padding-top:12px}
+@media(max-width:600px){.progress-summary{grid-template-columns:1fr 1fr}}
+
+/* ===== APP NAV ICONS =====
+   Put your downloaded icons inside the "icons" folder.
+   Supported examples: dashboard.png, attendance.png, fees.png,
+   results.png, progress.png
+===== */
+.nav-icon{
+  width:22px;height:22px;display:block;object-fit:contain;
+  margin:0 auto 4px
+}
+.nav-name{display:block;font-size:10px;white-space:nowrap}
+.progress-hero{
+  position:relative;overflow:hidden;
+  background:linear-gradient(135deg,#111827,#334155);
+  color:#fff;border-radius:20px;padding:24px;margin-bottom:18px
+}
+.progress-hero::after{
+  content:"";position:absolute;width:160px;height:160px;border-radius:50%;
+  right:-55px;top:-70px;background:rgba(255,255,255,.08)
+}
+.progress-student{display:flex;align-items:center;gap:14px;position:relative;z-index:1}
+.progress-student .progress-avatar{border:3px solid rgba(255,255,255,.25)}
+.progress-student p{color:rgba(255,255,255,.7);margin-top:5px;font-size:11px}
+.progress-score{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+  margin-top:22px;background:rgba(255,255,255,.13);border-radius:14px;
+  overflow:hidden;position:relative;z-index:1
+}
+.progress-score div{padding:15px 10px;background:rgba(15,23,42,.18);text-align:center}
+.progress-score span{display:block;font-size:9px;color:rgba(255,255,255,.65);letter-spacing:.5px}
+.progress-score strong{display:block;font-size:19px;margin-top:5px}
+.progress-section-title{font-size:12px;color:#64748b;font-weight:700;text-transform:uppercase;letter-spacing:.7px;margin:22px 0 8px}
+.exam-report{
+  background:#fff;border:1px solid #e5e7eb;border-radius:15px;
+  padding:17px;margin:10px 0
+}
+.exam-report h4{display:flex;justify-content:space-between;align-items:center;margin:0 0 12px;font-size:14px}
+.exam-badge{font-size:10px;background:#f1f5f9;padding:5px 8px;border-radius:999px;color:#475569}
+.report-row{border-bottom:1px solid #f1f5f9}
+.report-row:last-child{border-bottom:0}
+.report-row.total{
+  background:#f8fafc;border:0;border-radius:9px;padding:11px;margin-top:9px
+}
+@media(max-width:600px){
+  .progress-hero{padding:19px;border-radius:16px}
+  .progress-score strong{font-size:16px}
+}
+
+
+/* ===== CLEAN CIRCULAR PROGRESS REPORT ===== */
+.progress-page-wrap{max-width:760px;margin:0 auto}
+.progress-top{
+  background:#fff;border:1px solid #e5e7eb;border-radius:20px;
+  padding:22px;margin-bottom:18px
+}
+.progress-student{
+  display:flex;align-items:center;gap:15px;
+  padding-bottom:20px;border-bottom:1px solid #eef2f7
+}
+.progress-profile-circle{
+  width:76px;height:76px;border-radius:50%;object-fit:cover;
+  background:#f1f5f9;display:flex;align-items:center;justify-content:center;
+  font-size:25px;font-weight:800;color:#334155;flex:none;
+  border:3px solid #fff;box-shadow:0 2px 10px rgba(15,23,42,.10)
+}
+.progress-student h3{font-size:19px;line-height:1.25}
+.progress-student p{font-size:11px;color:#64748b;margin-top:5px}
+.progress-main{
+  display:grid;grid-template-columns:220px 1fr;gap:28px;
+  align-items:center;padding-top:22px
+}
+.progress-circle::before{
+  content:"";position:absolute;width:154px;height:154px;border-radius:50%;
+  background:#fff
+}
+.progress-circle-inner{position:relative;text-align:center}
+.progress-circle-inner strong{display:block;font-size:30px;line-height:1}
+.progress-circle-inner span{display:block;font-size:10px;color:#94a3b8;margin-top:7px}
+.progress-metrics{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.progress-metric{
+  border:1px solid #eef2f7;border-radius:12px;padding:14px;background:#fafbfc
+}
+.progress-metric span{display:block;font-size:9px;color:#94a3b8;letter-spacing:.5px}
+.progress-metric strong{display:block;font-size:18px;margin-top:5px}
+.progress-section-title{
+  font-size:12px;font-weight:700;color:#475569;
+  margin:22px 0 10px
+}
+.progress-exam{
+  background:#fff;border:1px solid #e5e7eb;border-radius:14px;
+  padding:16px;margin-bottom:10px
+}
+.progress-exam-head{
+  display:flex;justify-content:space-between;align-items:center;gap:10px;
+  margin-bottom:10px
+}
+.progress-exam-head strong{font-size:13px}
+.progress-exam-badge{
+  font-size:10px;padding:5px 8px;border-radius:999px;
+  background:#f1f5f9;color:#475569
+}
+.progress-subject{
+  display:grid;grid-template-columns:1fr 90px 55px;
+  gap:8px;padding:9px 0;border-top:1px solid #f1f5f9;font-size:11px
+}
+.progress-subject span:nth-child(2){text-align:right;color:#475569}
+.progress-subject span:last-child{text-align:right;font-weight:700}
+.progress-exam-total{
+  display:flex;justify-content:space-between;margin-top:10px;
+  padding:10px;border-radius:9px;background:#f8fafc;
+  font-size:11px;font-weight:700
+}
+.progress-empty{
+  padding:35px 10px;text-align:center;color:#94a3b8;font-size:12px;
+  border:1px dashed #dbe2ea;border-radius:14px
+}
+@media(max-width:600px){
+  .progress-top{padding:17px;border-radius:16px}
+  .progress-main{grid-template-columns:1fr;gap:20px}
+  .progress-circle::before{width:138px;height:138px}
+  .progress-circle-inner strong{font-size:27px}
+  .progress-profile-circle{width:62px;height:62px;font-size:21px}
+  .progress-student h3{font-size:17px}
+  .progress-metrics{grid-template-columns:1fr 1fr}
+  .progress-subject{grid-template-columns:1fr 78px 48px}
+}
+
+
+/* ===== REQUIRED DOCUMENTS — added to the existing parent app ===== */
+.documents-page-title{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:12px;margin-bottom:14px
+}
+.documents-page-title h2{margin:0}
+.documents-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:6px 9px;border-radius:999px;
+  background:#ecfdf3;color:#15803d;
+  font-size:9px;font-weight:800;white-space:nowrap
+}
+.documents-badge.pending{background:#fff7ed;color:#c2410c}
+.documents-list{
+  background:#fff;border-top:1px solid #e5e7eb
+}
+.document-item{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:12px;padding:15px 0;border-bottom:1px solid #e5e7eb
+}
+.document-item:last-child{border-bottom:0}
+.document-item-left{
+  display:flex;align-items:center;gap:11px;min-width:0
+}
+.document-item-icon{
+  width:40px;height:40px;border-radius:10px;
+  background:#eef2ff;color:#3157d5;
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;font-weight:800;flex:none
+}
+.document-item-name{
+  font-size:12px;font-weight:700;color:#1f2937
+}
+.document-item-scope{
+  font-size:9px;color:#94a3b8;margin-top:4px
+}
+.document-status{
+  font-size:9px;font-weight:800;padding:6px 9px;border-radius:999px;
+  white-space:nowrap
+}
+.document-status.required{background:#fff7ed;color:#c2410c}
+.document-status.uploaded{background:#ecfdf3;color:#15803d}
+.documents-empty{
+  padding:35px 12px;text-align:center;color:#94a3b8;font-size:11px
+}
+.documents-empty strong{
+  display:block;color:#334155;font-size:13px;margin-bottom:5px
+}
+.document-dot{
+  display:inline-block;width:7px;height:7px;border-radius:50%;
+  background:#22c55e;box-shadow:0 0 0 2px #dcfce7;
+  margin-left:4px;vertical-align:middle
+}
+@media(max-width:600px){
+  .documents-page-title h2{font-size:15px}
+  .document-item{padding:13px 0}
+  .document-item-icon{width:37px;height:37px;font-size:16px}
+  .document-item-name{font-size:11px}
+  .document-item-scope{font-size:8px}
+  .document-status{font-size:8px;padding:5px 7px}
+}
+/* =========================================
+   PARENT LOGIN TOP / LEFT IMAGE
+========================================= */
+
+.parent-login-visual-content{
+  position:relative;
+  z-index:2;
+  width:100%;
+  max-width:500px;
+  text-align:center;
+}
+
+.parent-login-image{
+  display:block;
+  width:100%;
+  max-width:430px;
+  max-height:430px;
+  object-fit:contain;
+  margin:0 auto 25px;
+}
+
+.parent-login-visual h1{
+  text-align:center;
+}
+
+.parent-login-visual .sub{
+  text-align:center;
+}
+
+
+/* =========================================
+   RIGHT LOGIN BACKGROUND
+========================================= */
+
+.parent-login-form-side{
+  position:relative;
+  overflow:hidden;
+  isolation:isolate;
+  background:#fff;
+}
+
+.login-bg-icons{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+  overflow:hidden;
+  z-index:0;
+}
+
+.login-bg-icons i{
+  position:absolute;
+  color:#162648;
+  opacity:.10;
+  font-size:25px;
+}
+
+
+/* ===== PC RANDOM POSITIONS ===== */
+
+.login-bg-icons i:nth-child(1){
+  top:6%;
+  left:7%;
+  transform:rotate(-15deg);
+}
+
+.login-bg-icons i:nth-child(2){
+  top:11%;
+  right:8%;
+  font-size:30px;
+  transform:rotate(10deg);
+}
+
+.login-bg-icons i:nth-child(3){
+  top:25%;
+  left:20%;
+  font-size:21px;
+  transform:rotate(13deg);
+}
+
+.login-bg-icons i:nth-child(4){
+  top:31%;
+  right:4%;
+  font-size:28px;
+  transform:rotate(-16deg);
+}
+
+.login-bg-icons i:nth-child(5){
+  top:46%;
+  left:5%;
+  font-size:31px;
+  transform:rotate(8deg);
+}
+
+.login-bg-icons i:nth-child(6){
+  top:53%;
+  right:17%;
+  font-size:22px;
+  transform:rotate(14deg);
+}
+
+.login-bg-icons i:nth-child(7){
+  top:65%;
+  left:18%;
+  font-size:27px;
+  transform:rotate(-12deg);
+}
+
+.login-bg-icons i:nth-child(8){
+  top:72%;
+  right:5%;
+  font-size:30px;
+  transform:rotate(13deg);
+}
+
+.login-bg-icons i:nth-child(9){
+  bottom:9%;
+  left:7%;
+  font-size:22px;
+  transform:rotate(16deg);
+}
+
+.login-bg-icons i:nth-child(10){
+  bottom:4%;
+  right:22%;
+  font-size:27px;
+  transform:rotate(-13deg);
+}
+
+
+/* LOGIN FORM ABOVE BACKGROUND */
+
+.parent-login-form{
+  position:relative;
+  z-index:2;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media(max-width:700px){
+
+  /* TOP IMAGE */
+
+  .parent-login-visual{
+    min-height:365px;
+    padding:20px 24px 80px;
+    align-items:flex-start;
+  }
+
+  .parent-login-visual-content{
+    width:100%;
+    max-width:none;
+  }
+
+  .parent-login-image{
+    width:100%;
+    max-width:255px;
+    max-height:205px;
+    object-fit:contain;
+    margin:0 auto 8px;
+  }
+
+  .parent-login-visual h1{
+    font-size:25px;
+  }
+
+  .parent-login-visual .sub{
+    font-size:12px;
+    margin-top:7px;
+  }
+
+
+  /* RIGHT / BOTTOM LOGIN BACKGROUND */
+
+  .parent-login-form-side{
+    position:relative;
+    overflow:hidden;
+  }
+
+  .login-bg-icons{
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    width:100%;
+    height:100%;
+  }
+
+  .login-bg-icons i{
+    display:block;
+    color:#162648;
+    opacity:.13;
+    font-size:19px;
+  }
+
+  .login-bg-icons i:nth-child(1){
+    top:3%;
+    left:5%;
+    font-size:21px;
+    transform:rotate(-13deg);
+  }
+
+  .login-bg-icons i:nth-child(2){
+    top:8%;
+    right:6%;
+    font-size:18px;
+    transform:rotate(16deg);
+  }
+
+  .login-bg-icons i:nth-child(3){
+    top:20%;
+    left:16%;
+    font-size:17px;
+    transform:rotate(10deg);
+  }
+
+  .login-bg-icons i:nth-child(4){
+    top:27%;
+    right:4%;
+    font-size:22px;
+    transform:rotate(-15deg);
+  }
+
+  .login-bg-icons i:nth-child(5){
+    top:42%;
+    left:4%;
+    font-size:20px;
+    transform:rotate(14deg);
+  }
+
+  .login-bg-icons i:nth-child(6){
+    top:50%;
+    right:13%;
+    font-size:18px;
+    transform:rotate(-9deg);
+  }
+
+  .login-bg-icons i:nth-child(7){
+    top:64%;
+    left:19%;
+    font-size:21px;
+    transform:rotate(-14deg);
+  }
+
+  .login-bg-icons i:nth-child(8){
+    top:71%;
+    right:3%;
+    font-size:18px;
+    transform:rotate(12deg);
+  }
+
+  .login-bg-icons i:nth-child(9){
+    bottom:8%;
+    left:5%;
+    font-size:20px;
+    transform:rotate(13deg);
+  }
+
+  .login-bg-icons i:nth-child(10){
+    bottom:3%;
+    right:20%;
+    font-size:17px;
+    transform:rotate(-12deg);
+  }
+}
+</style>
+</head>
+<body>
+
+<section class="login" id="loginPage">
+ <div class="login-wrap">
+  <div class="parent-login-visual">
+   <div class="parent-login-visual-content">
+
+  <img
+    src="https://online.sucollegehilsa.ac.in/frontend/images/login.png"
+    class="parent-login-image"
+    alt="Parent Portal"
+  >
+
+  <h1>Parent Access</h1>
+  <div class="sub">School & College Parent Portal</div>
+
+</div>
+  </div>
+
+  <div class="parent-login-form-side">
+    <div class="parent-login-form-side">
+
+  <div class="login-bg-icons">
+    <i class="fa-solid fa-graduation-cap"></i>
+    <i class="fa-solid fa-book-open"></i>
+    <i class="fa-solid fa-school"></i>
+    <i class="fa-solid fa-user-graduate"></i>
+    <i class="fa-solid fa-pen-to-square"></i>
+    <i class="fa-solid fa-calendar-check"></i>
+    <i class="fa-solid fa-chart-column"></i>
+    <i class="fa-solid fa-file-lines"></i>
+    <i class="fa-solid fa-book"></i>
+    <i class="fa-solid fa-award"></i>
+  </div>
+
+  <div class="parent-login-form">
+   <div class="parent-login-form">
+    <h2>Welcome Back</h2>
+    <div class="form-subtitle">Login with your registered parent account</div>
+    <div class="msg" id="loginMessage"></div>
+    <form id="loginForm">
+     <div class="field">
+      <label>Parent Mobile Number</label>
+      <input id="parentMobile" type="tel" inputmode="numeric" required placeholder="Enter registered mobile number" autocomplete="username">
+     </div>
+     <div class="field">
+      <label>Password</label>
+      <div class="password">
+       <input id="parentPassword" type="password" required placeholder="Enter password" autocomplete="current-password">
+       <button class="show" type="button" onclick="togglePassword()">Show</button>
+      </div>
+     </div>
+     <button class="primary" id="loginBtn">Login</button>
+    </form>
+   </div>
+  </div>
+ </div>
+</section>
+
+<div class="app" id="app">
+ <header class="topbar">
+  <div class="inst">
+   <img id="institutionLogo" style="display:none">
+   <div class="inst-fallback" id="institutionFallback">I</div>
+   <div><h3 id="institutionName">Institution</h3><p id="institutionType">Parent Portal</p></div>
+  </div>
+  <button class="logout" onclick="logout()">Logout</button>
+ </header>
+
+ <main class="content">
+  <div class="child-switch">
+   <label>Viewing student</label>
+   <select id="childSelect" onchange="selectChild(this.value)"></select>
+  </div>
+
+  <section class="page active" id="dashboardPage">
+    <div id="parentWelcome" class="parent-welcome"></div>
+   <div id="studentHero"></div>
+   <div class="stats">
+    <div class="stat"><span>ATTENDANCE</span><strong id="attendanceStat">—</strong></div>
+    <div class="stat"><span>PENDING FEES</span><strong id="feeStat">₹0</strong></div>
+   </div>
+   <div class="section"><h2>Student Details</h2><div id="profileSummary"></div></div>
+  </section>
+
+  <section class="page" id="attendancePage"><div class="section"><h2>Attendance</h2><div id="attendanceList"></div></div></section>
+  <section class="page" id="feesPage"><div class="section"><h2>Fees</h2><div id="feesList"></div></div></section>
+   <section class="page" id="progressPage">
+    <div class="section">
+      <h2>Progress Report</h2>
+      <div id="progressContent"></div>
+    </div>
+   </section>
+
+   <section class="page" id="documentsPage">
+    <div class="documents-page-title">
+      <h2>Required Documents</h2>
+      <span class="documents-badge" id="documentsBadge">Checking...</span>
+    </div>
+    <div class="documents-list" id="documentsList"></div>
+   </section>
+ </main>
+
+ <nav class="bottom">
+   <button class="nav active" onclick="openPage('dashboard',this)">
+    <img class="nav-icon" src="dashboard.png" alt="">
+    <span class="nav-name">Dashboard</span>
+   </button>
+   <button class="nav" onclick="openPage('attendance',this)">
+    <img class="nav-icon" src="checking-attendance.png" alt="">
+    <span class="nav-name">Attendance</span>
+   </button>
+   <button class="nav" onclick="openPage('fees',this)">
+    <img class="nav-icon" src="coin.png" alt="">
+    <span class="nav-name">Fees</span>
+   </button>
+   <button class="nav" onclick="openProgressPage(this)">
+    <img class="nav-icon" src="star.png" alt="">
+    <span class="nav-name">Progress</span>
+   </button>
+   <button class="nav" onclick="openDocumentsPage(this)">
+    <img class="nav-icon" src="google-docs.png" alt="">
+    <span class="nav-name">Documents</span>
+   </button>   
+  </nav>
+</div>
+
+
+<script>
+/* =========================================================
+   ADD YOUR EXISTING SUPABASE PROJECT DETAILS HERE
+========================================================= */
+const SUPABASE_URL = "https://jnthoikyfuqqeijjugvt.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_iFNzhlhCygf4-D5Q_UzKcQ_tZQC004-";
+const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+let children = [];
+let currentStudent = null;
+let currentInstitution = null;
+let attendanceRows = [];
+let feeRows = [];
+let markRows = [];
+let liveChannel = null;
+let requiredDocuments = [];
+let studentDocuments = [];
+let documentsChannel = null;
+
+const $ = id => document.getElementById(id);
+const money = n => "₹" + Number(n || 0).toLocaleString("en-IN");
+const esc = v => String(v ?? "").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
+
+function togglePassword(){
+ const p=$("parentPassword"), b=document.querySelector(".show");
+ p.type=p.type==="password"?"text":"password"; b.textContent=p.type==="password"?"Show":"Hide";
+}
+
+$("loginForm").addEventListener("submit", async e=>{
+ e.preventDefault();
+ const mobile=$("parentMobile").value.trim();
+ const password=$("parentPassword").value;
+ const msg=$("loginMessage"); msg.style.display="none";
+ $("loginBtn").disabled=true;
+
+ try{
+   const {data,error}=await db.from("students").select("*").eq("parent_mobile",mobile).eq("status","active");
+   if(error) throw error;
+   if(!data?.length) throw new Error("No student found with this parent mobile number.");
+
+   /* Current project uses student access_password.
+      Every child linked to this parent must not expose another family's data. */
+   const matched=data.filter(s=>String(s.access_password||"")===password);
+   if(!matched.length) throw new Error("Invalid mobile number or password.");
+
+   children=matched;
+   localStorage.setItem("cezedu_parent_mobile",mobile);
+
+   // Persist the authorized parent session. Password is NOT stored.
+   localStorage.setItem("cezedu_parent_session", JSON.stringify({
+     mobile: mobile,
+     student_ids: matched.map(x => String(x.student_id)),
+     children: matched,
+     saved_at: Date.now()
+   }));
+
+   await enterApp();
+ }catch(err){
+   msg.textContent=err.message||"Login failed. Check parent mobile and 6-digit password.";
+   msg.style.display="block";
+ }finally{$("loginBtn").disabled=false}
+});
+
+async function enterApp(){
+ $("loginPage").style.display="none"; $("app").style.display="block";
+ $("childSelect").innerHTML=children.map(s=>`<option value="${esc(s.student_id)}">${esc(s.student_name)} · ${esc(s.class_course||"")}</option>`).join("");
+ await selectChild(children[0].student_id);
+}
+
+async function selectChild(studentId){
+ currentStudent=children.find(s=>String(s.student_id)===String(studentId));
+ if(!currentStudent)return;
+ $("childSelect").value=currentStudent.student_id;
+
+ const {data:inst}=await db.from("institutions").select("*").eq("institution_id",currentStudent.institution_id).maybeSingle();
+ currentInstitution=inst||null;
+ renderInstitution();
+ await loadStudentData();
+ startRealtime();
+}
+
+function renderInstitution(){
+ $("institutionName").textContent=currentInstitution?.institution_name||"Institution";
+ $("institutionType").textContent=(currentInstitution?.institution_type||"Institution")+" · Parent Portal";
+ const logo=currentInstitution?.logo_url;
+ if(logo){
+   $("institutionLogo").src=logo;$("institutionLogo").style.display="block";$("institutionFallback").style.display="none";
+ }else{
+   $("institutionLogo").style.display="none";$("institutionFallback").style.display="flex";
+   $("institutionFallback").textContent=(currentInstitution?.institution_name||"I").charAt(0).toUpperCase();
+ }
+}
+
+async function loadStudentData(){
+ const sid=currentStudent.student_id, iid=currentStudent.institution_id;
+ const [a,f,m]=await Promise.all([
+   db.from("student_attendance").select("*").eq("institution_id",iid).eq("student_id",sid).order("attendance_date",{ascending:false}),
+   db.from("student_fees").select("*").eq("institution_id",iid).eq("student_id",sid).order("created_at",{ascending:false}),
+   db.from("student_marks").select("*").eq("institution_id",iid).eq("student_id",sid).order("exam_date",{ascending:false})
+ ]);
+ if(a.error)console.error(a.error); if(f.error)console.error(f.error); if(m.error)console.error(m.error);
+ attendanceRows=a.data||[];feeRows=f.data||[];markRows=m.data||[];
+ renderAll();
+}
+
+function renderAll(){
+ renderHero();renderProfile();renderAttendance();renderFees();renderStats();
+}
+
+
+function renderParentWelcome(){
+  const box=document.getElementById("parentWelcome");
+  if(!box) return;
+
+  const s=window.currentStudent || currentStudent;
+  const parentName=(s?.parent_name || s?.father_name || s?.mother_name || "").trim();
+
+  box.textContent=parentName ? `Welcome ${parentName}` : "Welcome Parent";
+}
+
+function renderHero(){
+  renderParentWelcome();
+  const s=currentStudent;
+
+  const avatar=s.student_photo
+    ? `<img class="avatar" src="${esc(s.student_photo)}">`
+    : `<div class="avatar">${esc((s.student_name||"S").charAt(0).toUpperCase())}</div>`;
+
+  $("studentHero").innerHTML=`<div class="hero">${avatar}<div><h1>${esc(s.student_name)}</h1><div class="meta">${esc(s.class_course||"—")} · ${esc(s.section_year||"—")} &nbsp; | &nbsp; Roll: ${esc(s.roll_number||"—")}</div></div></div>`;
+}
+
+function renderProfile(){
+ const s=currentStudent;
+ $("profileSummary").innerHTML=[
+  ["Admission Number",s.admission_number||"—"],["Class / Course",s.class_course||"—"],
+  ["Section / Year",s.section_year||"—"],["Roll Number",s.roll_number||"—"],
+  ["Parent",s.parent_name||"—"],["Parent Mobile",s.parent_mobile||"—"]
+ ].map(x=>`<div class="row"><span>${x[0]}</span><strong>${esc(x[1])}</strong></div>`).join("");
+}
+
+function renderAttendance(){
+ if(!attendanceRows.length){$("attendanceList").innerHTML='<div class="notice">No attendance records yet.</div>';return}
+ $("attendanceList").innerHTML=attendanceRows.map(r=>`<div class="att-row"><span>${esc(r.attendance_date)}</span><strong class="${esc(r.status)}">${esc((r.status||"").toUpperCase())}</strong></div>`).join("");
+}
+
+function renderFees(){
+ if(!feeRows.length){$("feesList").innerHTML='<div class="notice">No fee records yet.</div>';return}
+ $("feesList").innerHTML=feeRows.map(r=>{
+  const due=Math.max(0,Number(r.total_amount||0)-Number(r.paid_amount||0));
+  return `<div class="fee-row"><div class="fee-head"><strong>${esc(r.fee_type)}</strong><strong>${money(due)} due</strong></div><div class="meta">${esc(r.academic_year||"")} · Total ${money(r.total_amount)} · Paid ${money(r.paid_amount)}</div></div>`;
+ }).join("");
+}
+
+
+
+function renderStats(){
+ const total=attendanceRows.length,present=attendanceRows.filter(r=>r.status==="present").length;
+ $("attendanceStat").textContent=total?((present/total)*100).toFixed(1)+"%":"—";
+ const due=feeRows.reduce((n,r)=>n+Math.max(0,Number(r.total_amount||0)-Number(r.paid_amount||0)),0);
+ $("feeStat").textContent=money(due);
+}
+
+
+function normalizeDocValue(v){
+  return String(v ?? "").trim().toLowerCase();
+}
+
+function requiredDocumentMatchesStudent(doc, student){
+  const classValue = student?.class_course || student?.course_class || "";
+  const branchValue = student?.branch || student?.branch_name || "";
+  const sectionValue = student?.section_year || student?.section || "";
+
+  const match = (rule, actual) => {
+    const r = normalizeDocValue(rule);
+    const a = normalizeDocValue(actual);
+    return !r || r === "all" || r === "*" || r === a;
+  };
+
+  return match(doc.class_course || doc.course_class, classValue) &&
+         match(doc.branch_name || doc.branch, branchValue) &&
+         match(doc.section_year || doc.section, sectionValue);
+}
+
+function findUploadedDocument(requiredId){
+  return studentDocuments.find(
+    x => String(x.required_document_id) === String(requiredId)
+  );
+}
+
+async function loadRequiredDocuments(){
+  if(!currentStudent) return;
+
+  const iid = currentStudent.institution_id;
+  const sid = currentStudent.student_id;
+
+  if(!iid || !sid){
+    requiredDocuments = [];
+    studentDocuments = [];
+    renderRequiredDocuments();
+    return;
+  }
+
+  const requiredResult = await db
+    .from("institution_required_documents")
+    .select("*")
+    .eq("institution_id", iid)
+    .order("created_at", {ascending:false});
+
+  if(requiredResult.error){
+    console.error("Required documents error:", requiredResult.error);
+    requiredDocuments = [];
+    studentDocuments = [];
+    renderRequiredDocuments("Unable to load required documents.");
+    return;
+  }
+
+  requiredDocuments = (requiredResult.data || [])
+    .filter(d => {
+      const st = String(d.status ?? "").trim().toLowerCase();
+      return (!st || ["active","pending"].includes(st)) &&
+             requiredDocumentMatchesStudent(d, currentStudent);
+    });
+
+  if(!requiredDocuments.length){
+    studentDocuments = [];
+    renderRequiredDocuments();
+    return;
+  }
+
+  const ids = requiredDocuments.map(d => d.id);
+
+  const uploadedResult = await db
+    .from("student_documents")
+    .select("*")
+    .eq("institution_id", iid)
+    .eq("student_id", sid)
+    .in("required_document_id", ids);
+
+  if(uploadedResult.error){
+    console.error("Student documents error:", uploadedResult.error);
+    studentDocuments = [];
+  }else{
+    studentDocuments = uploadedResult.data || [];
+  }
+
+  renderRequiredDocuments();
+}
+
+function renderRequiredDocuments(errorText=""){
+  const list = $("documentsList");
+  const badge = $("documentsBadge");
+  const dot = $("documentsDot");
+
+  if(!list) return;
+
+  if(errorText){
+    list.innerHTML = `<div class="documents-empty">${esc(errorText)}</div>`;
+    if(badge){
+      badge.textContent = "Unavailable";
+      badge.className = "documents-badge pending";
+    }
+    if(dot) dot.style.display = "none";
+    return;
+  }
+
+  if(!requiredDocuments.length){
+    list.innerHTML = `
+      <div class="documents-empty">
+        <strong>No required documents</strong>
+        Your school or college has not requested any documents for this student yet.
+      </div>`;
+    if(badge){
+      badge.textContent = "All clear";
+      badge.className = "documents-badge";
+    }
+    if(dot) dot.style.display = "none";
+    return;
+  }
+
+  let pendingCount = 0;
+
+  list.innerHTML = requiredDocuments.map(doc => {
+    const uploaded = findUploadedDocument(doc.id);
+    const uploadedStatus = String(uploaded?.status || "").toLowerCase();
+    const isUploaded = uploaded &&
+      ["uploaded","approved","submitted"].includes(uploadedStatus);
+
+    if(!isUploaded) pendingCount++;
+
+    const scope = [
+      doc.class_course ? `Class: ${doc.class_course}` : "",
+      (doc.branch_name || doc.branch) ? `Branch: ${doc.branch_name || doc.branch}` : "",
+      (doc.section_year || doc.section) ? `Section/Year: ${doc.section_year || doc.section}` : ""
+    ].filter(Boolean).join(" • ");
+
+    return `
+      <div class="document-item">
+        <div class="document-item-left">
+          <div class="document-item-icon">▣</div>
+          <div>
+            <div class="document-item-name">${esc(doc.document_name || "Required Document")}</div>
+            <div class="document-item-scope">${esc(scope || "Required by institution")}</div>
+          </div>
+        </div>
+        <span class="document-status ${isUploaded ? "uploaded" : "required"}">
+          ${isUploaded ? "Uploaded" : "Required"}
+        </span>
+      </div>`;
+  }).join("");
+
+  if(badge){
+    badge.textContent = pendingCount ? `${pendingCount} Required` : "Completed";
+    badge.className = pendingCount ? "documents-badge pending" : "documents-badge";
+  }
+
+  if(dot) dot.style.display = pendingCount ? "inline-block" : "none";
+}
+
+async function openDocumentsPage(btn){
+  document.querySelectorAll(".page").forEach(p => {
+    p.classList.remove("active");
+    p.style.display = "";
+  });
+  document.querySelectorAll(".nav").forEach(b => b.classList.remove("active"));
+
+  const page = $("documentsPage");
+  if(page) page.classList.add("active");
+  if(btn) btn.classList.add("active");
+
+  await loadRequiredDocuments();
+}
+
+function startDocumentsRealtime(){
+  if(documentsChannel) db.removeChannel(documentsChannel);
+
+  if(!currentStudent) return;
+
+  const iid = currentStudent.institution_id;
+  const sid = currentStudent.student_id;
+
+  if(!iid || !sid) return;
+
+  documentsChannel = db.channel("parent-documents-" + iid + "-" + sid)
+    .on(
+      "postgres_changes",
+      {
+        event:"*",
+        schema:"public",
+        table:"institution_required_documents",
+        filter:`institution_id=eq.${iid}`
+      },
+      loadRequiredDocuments
+    )
+    .on(
+      "postgres_changes",
+      {
+        event:"*",
+        schema:"public",
+        table:"student_documents",
+        filter:`student_id=eq.${sid}`
+      },
+      loadRequiredDocuments
+    )
+    .subscribe();
+}
+
+function stopDocumentsRealtime(){
+  if(documentsChannel){
+    db.removeChannel(documentsChannel);
+    documentsChannel = null;
+  }
+}
+
+
+function openPage(name,btn){
+ document.querySelectorAll(".page").forEach(p=>{
+   p.classList.remove("active");
+   p.style.display="";
+ });
+ document.querySelectorAll(".nav").forEach(b=>b.classList.remove("active"));
+ const page=$(name+"Page");
+ if(page) page.classList.add("active");
+ if(btn) btn.classList.add("active");
+}
+
+function openProgressPage(btn){
+ document.querySelectorAll(".page").forEach(p=>{
+   p.classList.remove("active");
+   p.style.display="";
+ });
+ document.querySelectorAll(".nav").forEach(b=>b.classList.remove("active"));
+ const page=$("progressPage");
+ if(page) page.classList.add("active");
+ if(btn) btn.classList.add("active");
+ renderProgressReport();
+}
+
+function startRealtime(){
+ if(liveChannel)db.removeChannel(liveChannel);
+ const iid=currentStudent.institution_id,sid=currentStudent.student_id;
+ liveChannel=db.channel("parent-"+iid+"-"+sid)
+  .on("postgres_changes",{event:"*",schema:"public",table:"student_attendance",filter:`student_id=eq.${sid}`},loadStudentData)
+  .on("postgres_changes",{event:"*",schema:"public",table:"student_fees",filter:`student_id=eq.${sid}`},loadStudentData)
+  .on("postgres_changes",{event:"*",schema:"public",table:"student_marks",filter:`student_id=eq.${sid}`},loadStudentData)
+  .on("postgres_changes",{event:"UPDATE",schema:"public",table:"students",filter:`student_id=eq.${sid}`},async p=>{
+    currentStudent={...currentStudent,...p.new};
+    const i=children.findIndex(x=>x.student_id===sid);if(i>=0)children[i]=currentStudent;
+    renderAll();
+  }).subscribe();
+}
+
+async function restoreLogin(){
+  const raw = localStorage.getItem("cezedu_parent_session");
+
+  if(!raw){
+    const mobile = localStorage.getItem("cezedu_parent_mobile");
+    if(mobile) $("parentMobile").value = mobile;
+    return;
+  }
+
+  try{
+    const session = JSON.parse(raw);
+
+    if(!session?.mobile){
+      localStorage.removeItem("cezedu_parent_session");
+      return;
+    }
+
+    $("parentMobile").value = session.mobile;
+
+    // Open the app immediately from the previously authorized session.
+    if(Array.isArray(session.children) && session.children.length){
+      children = session.children;
+      await enterApp();
+      return;
+    }
+
+    // Compatibility for the older saved-session format.
+    if(Array.isArray(session.student_ids) && session.student_ids.length){
+      const {data,error}=await db
+        .from("students")
+        .select("*")
+        .eq("parent_mobile",session.mobile)
+        .eq("status","active")
+        .in("student_id",session.student_ids);
+
+      if(error) throw error;
+
+      if(data?.length){
+        children=data;
+        session.children=data;
+        localStorage.setItem("cezedu_parent_session",JSON.stringify(session));
+        await enterApp();
+      }
+    }
+  }catch(err){
+    console.error("Parent session restore failed:",err);
+    // Do not clear a valid saved session because of a temporary error.
+  }
+}
+
+
+function parentGrade(p){
+  if(p>=90)return "A+";
+  if(p>=80)return "A";
+  if(p>=70)return "B";
+  if(p>=60)return "C";
+  if(p>=50)return "D";
+  if(p>=35)return "E";
+  return "F";
+}
+
+async function renderProgressReport(){
+  const box=document.getElementById("progressContent");
+  if(!box)return;
+
+  const s=currentStudent;
+  if(!s){
+    box.innerHTML='<div class="notice">Student details not available.</div>';
+    return;
+  }
+
+  const name=esc(s.student_name||"Student");
+  const cls=esc(s.class_course||"-");
+  const section=esc(s.section_year||"-");
+  const rows=Array.isArray(markRows) ? markRows : [];
+
+  const getExam = r => r.exam_name || r.exam || r.exam_title || "Exam";
+  const getSubject = r => r.subject || r.subject_name || r.subject_title || "Subject";
+  const getObtained = r => Number(
+    r.obtained_marks ?? r.marks_obtained ?? r.marks ?? r.mark ?? 0
+  );
+  const getMax = r => Number(
+    r.max_marks ?? r.maximum_marks ?? r.total_marks ?? r.max_mark ?? 0
+  );
+
+
+  const avatar=s.student_photo
+    ? `<img class="progress-profile-circle" src="${esc(s.student_photo)}" alt="Student">`
+    : `<div class="progress-profile-circle">${esc((s.student_name||"S").charAt(0).toUpperCase())}</div>`;
+
+  const exams=[...new Set(rows.map(getExam))];
+
+  box.innerHTML=`
+    <div class="progress-page-wrap">
+      <div class="progress-top">
+        <div class="progress-student">
+          ${avatar}
+          <div>
+            <h3>${name}</h3>
+            <p>${cls} · ${section}</p>
+          </div>
+        </div>
+
+        <div class="progress-summary">
+          <div>
+            <span>EXAMS</span>
+            <strong>${exams.length}</strong>
+          </div>
+          <div>
+            <span>SUBJECTS</span>
+            <strong>${rows.length}</strong>
+          </div>
+          <div>
+            <span>RESULTS</span>
+            <strong>${rows.length ? "Available" : "—"}</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="progress-section-title">Examination Results</div>
+
+      ${
+        !rows.length
+        ? `<div class="progress-empty">No examination results available yet.</div>`
+        : exams.map(exam=>{
+            const examRows=rows.filter(r=>getExam(r)===exam);
+            const examObtained=examRows.reduce((sum,r)=>sum+getObtained(r),0);
+            const examMax=examRows.reduce((sum,r)=>sum+getMax(r),0);
+            const examPct=examMax ? (examObtained/examMax)*100 : 0;
+
+            return `
+              <div class="progress-exam">
+                <div class="progress-exam-head">
+                  <strong>${esc(exam)}</strong>
+                  <span class="progress-exam-badge">
+                    ${examMax ? "Total "+examObtained+" · "+examPct.toFixed(1)+"%" : "Marks"}
+                  </span>
+                </div>
+
+                ${examRows.map(r=>{
+                  const obtained=getObtained(r);
+                  const max=getMax(r);
+                  const pct=max ? (obtained/max)*100 : 0;
+
+                  return `
+                    <div class="progress-subject">
+                      <span>${esc(getSubject(r))}</span>
+                      <span>${obtained}${max ? " / "+max : ""}</span>
+                      <span>${max ? pct.toFixed(1)+"%" : "—"}</span>
+                    </div>
+                  `;
+                }).join("")}
+
+                <div class="progress-exam-total">
+                  <span>Total</span>
+                  <span>${examObtained} · ${examMax ? examPct.toFixed(1)+"%" : "—"} · Grade ${examMax ? parentGrade(examPct) : "—"}</span>
+                </div>
+              </div>
+            `;
+          }).join("")
+      }
+    </div>
+  `;
+}
+
+function loadParentProgressMarks(){
+  const box=document.getElementById("progressExamResults");
+  if(!box) return;
+
+  const rows=Array.isArray(markRows) ? markRows : [];
+
+  if(!rows.length){
+    box.innerHTML='<div class="empty">No examination results available yet.</div>';
+    return;
+  }
+
+  const getExam = r => r.exam_name || r.exam || r.exam_title || "Exam";
+  const getSubject = r => r.subject || r.subject_name || r.subject_title || "Subject";
+  const getObtained = r => Number(
+    r.obtained_marks ?? r.marks_obtained ?? r.marks ?? r.mark ?? 0
+  );
+  const getMax = r => Number(
+    r.max_marks ?? r.maximum_marks ?? r.total_marks ?? r.max_mark ?? 0
+  );
+
+  const exams=[...new Set(rows.map(getExam))];
+
+  box.innerHTML=exams.map(exam=>{
+    const examRows=rows.filter(r=>getExam(r)===exam);
+
+    return `
+      <div style="padding:15px 0;border-bottom:1px solid #f0f0f0">
+        <div style="font-size:14px;font-weight:700;margin-bottom:10px">${esc(exam)}</div>
+        ${examRows.map(r=>{
+          const obtained=getObtained(r);
+          const max=getMax(r);
+          const pct=max ? (obtained/max)*100 : null;
+
+          return `
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:15px;padding:9px 0;font-size:12px">
+              <span>${esc(getSubject(r))}</span>
+              <strong>
+                ${obtained}${max ? ` / ${max}` : ""}
+                ${pct!==null ? `<span style="font-weight:500;color:#9ca3af"> (${pct.toFixed(1)}%)</span>` : ""}
+              </strong>
+            </div>
+          `;
+        }).join("")}
+      </div>
+    `;
+  }).join("");
+}
+
+function logout(){
+ if(liveChannel) db.removeChannel(liveChannel);
+ if(documentsChannel) db.removeChannel(documentsChannel);
+
+ localStorage.removeItem("cezedu_parent_mobile");
+ localStorage.removeItem("cezedu_parent_session");
+
+ children=[];
+ currentStudent=null;
+ currentInstitution=null;
+ location.reload();
+}
+
+restoreLogin();
+</script>
+</body>
+</html>
