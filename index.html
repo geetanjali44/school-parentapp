@@ -312,7 +312,7 @@ button{cursor:pointer}
 }
 .documents-badge.pending{background:#fff7ed;color:#c2410c}
 .documents-list{
-  background:#fff;border-top:1px solid #e5e7eb
+  background:transparent;border-top:1px solid #e5e7eb
 }
 .document-item{
   display:flex;align-items:center;justify-content:space-between;
@@ -628,6 +628,1026 @@ button{cursor:pointer}
     transform:rotate(-12deg);
   }
 }
+
+
+/* ==========================================
+   PARENT DASHBOARD — CENTER STUDENT PHOTO
+   ========================================== */
+
+#dashboardPage #studentHero .hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  gap: 0;
+  padding: 18px 0 22px;
+  border-bottom: 0;
+}
+
+#dashboardPage #studentHero .avatar {
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  object-fit: cover;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 0 auto;
+  background: #e8f2ff;
+  color: #245b91;
+  border: 4px solid #ffffff;
+  box-shadow: 0 4px 18px rgba(36, 91, 145, 0.12);
+
+  font-size: 30px;
+  font-weight: 800;
+}
+
+/* Hide name, class and roll BELOW the profile photo.
+   Existing JS and student data remain untouched. */
+#dashboardPage #studentHero .hero > div:not(.avatar) {
+  display: none;
+}
+
+
+/* ==========================================
+   THREE SMALL COLORED CARDS
+   ========================================== */
+
+.parent-quick-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 9px;
+  width: 100%;
+  margin: 5px 0 22px;
+}
+
+.parent-quick-card {
+  appearance: none;
+  border: 0;
+  outline: none;
+
+  min-width: 0;
+  min-height: 128px;
+  padding: 14px 9px;
+
+  border-radius: 15px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 9px;
+
+  text-align: left;
+  cursor: pointer;
+
+  transition: transform 0.18s ease;
+}
+
+.parent-quick-card:active {
+  transform: scale(0.97);
+}
+
+.parent-card-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 16px;
+}
+
+.parent-card-title {
+  display: block;
+  font-size: 11px;
+  line-height: 1.35;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.parent-card-link {
+  display: block;
+  font-size: 9px;
+  line-height: 1.3;
+  font-weight: 600;
+}
+
+
+/* CARD 1 — LIGHT BLUE */
+
+.parent-card-student {
+  background: #e8f2ff;
+  color: #1e40af;
+}
+
+.parent-card-student .parent-card-icon {
+  background: #d4e6ff;
+  color: #2563eb;
+}
+
+
+/* CARD 2 — LIGHT GREEN */
+
+.parent-card-attendance {
+  background: #e8f8ee;
+  color: #166534;
+}
+
+.parent-card-attendance .parent-card-icon {
+  background: #d2f1de;
+  color: #15803d;
+}
+
+
+/* CARD 3 — LIGHT ORANGE */
+
+.parent-card-progress {
+  background: #fff1e6;
+  color: #9a3412;
+}
+
+.parent-card-progress .parent-card-icon {
+  background: #ffe0c7;
+  color: #c2410c;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+  .parent-quick-cards {
+    gap: 8px;
+  }
+
+  .parent-quick-card {
+    min-height: 122px;
+    padding: 12px 8px;
+    border-radius: 13px;
+  }
+
+  .parent-card-icon {
+    width: 31px;
+    height: 31px;
+    font-size: 15px;
+  }
+
+  .parent-card-title {
+    font-size: 10px;
+  }
+
+  .parent-card-link {
+    font-size: 8px;
+  }
+
+}
+
+/* ===== Dashboard and inner pages: visual changes only ===== */
+
+/* ==========================================
+   TOPBAR — DARK BLUE + WHITE FONT
+   ========================================== */
+
+.app .topbar {
+  background: #022e5b;
+  border-bottom: 1px solid #022e5b;
+  color: #ffffff;
+}
+
+.app .inst h3 {
+  color: #ffffff;
+  font-weight: 800;
+}
+
+.app .inst p {
+  color: #c8e4ff;
+}
+
+.app .inst-fallback {
+  background: #2876b9;
+  color: #ffffff;
+}
+
+.app .logout {
+  background: #ffffff;
+  color: #022e5b;
+  font-weight: 700;
+}
+
+
+/* ==========================================
+   STUDENT PROFILE
+   ========================================== */
+
+#dashboardPage #studentHero .hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  gap: 10px;
+  padding: 15px 0 24px;
+  border: 0;
+}
+
+#dashboardPage #studentHero .avatar {
+  width: 92px;
+  height: 92px;
+
+  margin: auto;
+
+  border: 4px solid #ffffff;
+
+  box-shadow: 0 4px 18px rgba(36,91,145,.12);
+}
+
+#dashboardPage #studentHero .hero > div:not(.avatar) {
+  display: block !important;
+}
+
+#dashboardPage #studentHero .hero h1 {
+  font-size: 19px;
+  color: #022e5b;
+  font-weight: 800;
+}
+
+#dashboardPage #studentHero .hero .meta {
+  font-size: 11px;
+  line-height: 1.7;
+  color: #526b85;
+}
+
+
+/* ==========================================
+   SIX SMALL DASHBOARD CARDS
+   ========================================== */
+
+#dashboardPage .parent-quick-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+
+  gap: 10px;
+  margin: 0 0 18px;
+}
+
+#dashboardPage .parent-quick-card {
+  width: 100%;
+  min-width: 0;
+
+  min-height: 105px;
+  padding: 12px 10px;
+
+  border: 0;
+  border-radius: 15px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 8px;
+  text-align: left;
+
+  box-shadow: none;
+}
+
+#dashboardPage .parent-card-icon {
+  width: 36px;
+  height: 36px;
+
+  border-radius: 11px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 16px;
+}
+
+#dashboardPage .parent-card-title {
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.35;
+
+  overflow-wrap: anywhere;
+}
+
+/* REMOVE VIEW + ARROW */
+
+#dashboardPage .parent-card-link {
+  display: none !important;
+}
+
+
+/* ==========================================
+   CARD 1 — STUDENT DETAILS
+   ========================================== */
+
+#dashboardPage .parent-card-student,
+#dashboardPage .card-student {
+  background: #e8f2ff;
+  color: #1e4f9a;
+}
+
+#dashboardPage .parent-card-student .parent-card-icon,
+#dashboardPage .card-student .parent-card-icon {
+  background: #d3e5ff;
+  color: #2563eb;
+}
+
+
+/* ==========================================
+   CARD 2 — ATTENDANCE
+   ========================================== */
+
+#dashboardPage .parent-card-attendance,
+#dashboardPage .card-attendance {
+  background: #e7f7ec;
+  color: #17663b;
+}
+
+#dashboardPage .parent-card-attendance .parent-card-icon,
+#dashboardPage .card-attendance .parent-card-icon {
+  background: #cff0db;
+  color: #15803d;
+}
+
+
+/* ==========================================
+   CARD 3 — MARKS
+   ========================================== */
+
+#dashboardPage .parent-card-marks,
+#dashboardPage .card-marks {
+  background: #fff0e4;
+  color: #9a4519;
+}
+
+#dashboardPage .parent-card-marks .parent-card-icon,
+#dashboardPage .card-marks .parent-card-icon {
+  background: #ffdfc5;
+  color: #c45a1b;
+}
+
+
+/* ==========================================
+   CARD 4 — FEES
+   ========================================== */
+
+#dashboardPage .parent-card-fees,
+#dashboardPage .card-fees {
+  background: #f0e8ff;
+  color: #6b21a8;
+}
+
+#dashboardPage .parent-card-fees .parent-card-icon,
+#dashboardPage .card-fees .parent-card-icon {
+  background: #e4d4ff;
+  color: #7e22ce;
+}
+
+
+/* ==========================================
+   CARD 5 — DOCUMENTS
+   ========================================== */
+
+#dashboardPage .parent-card-documents,
+#dashboardPage .card-documents {
+  background: #ffe8ef;
+  color: #9d174d;
+}
+
+#dashboardPage .parent-card-documents .parent-card-icon,
+#dashboardPage .card-documents .parent-card-icon {
+  background: #ffd4e2;
+  color: #be185d;
+}
+
+
+/* ==========================================
+   CARD 6 — PROGRESS
+   ========================================== */
+
+#dashboardPage .parent-card-progress,
+#dashboardPage .card-progress {
+  background: #e0f4f7;
+  color: #155e75;
+}
+
+#dashboardPage .parent-card-progress .parent-card-icon,
+#dashboardPage .card-progress .parent-card-icon {
+  background: #c5ebf1;
+  color: #0891b2;
+}
+
+
+/* ==========================================
+   DASHBOARD STATS
+   ========================================== */
+
+.parent-dashboard-stats {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+
+  gap: 12px;
+  margin: 0 0 20px;
+}
+
+.parent-stat {
+  min-width: 0;
+
+  background: #ffffff;
+  border: 1px solid #e8edf3;
+
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.parent-stat span {
+  display: block;
+
+  font-size: 10px;
+  font-weight: 650;
+
+  color: #64748b;
+}
+
+.parent-stat strong {
+  display: block;
+  margin-top: 8px;
+
+  font-size: 20px;
+  color: #022e5b;
+}
+
+
+/* ==========================================
+   BACK BUTTON + INNER PAGES
+   ========================================== */
+
+.parent-back-btn {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 9px;
+  padding: 10px 14px;
+  margin: 0 0 18px;
+
+  border: 1px solid #dbe7f3;
+  border-radius: 11px;
+
+  background: #ffffff;
+  color: #022e5b;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.parent-inner-card {
+  padding: 20px;
+
+  background: transparent;
+  color: #172b46;
+
+  border: 1px solid #e8edf3;
+  border-radius: 16px;
+}
+
+.parent-inner-card h2 {
+  font-size: 16px;
+  margin-bottom: 16px;
+
+  color: #022e5b;
+}
+
+
+/* ==========================================
+   MOBILE
+   ========================================== */
+
+@media (max-width: 600px) {
+
+  #dashboardPage .parent-quick-cards {
+    gap: 8px;
+  }
+
+  #dashboardPage .parent-quick-card {
+    min-height: 98px;
+    padding: 10px 8px;
+    border-radius: 13px;
+  }
+
+  #dashboardPage .parent-card-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+  }
+
+  #dashboardPage .parent-card-title {
+    font-size: 10px;
+  }
+
+  .parent-inner-card {
+    padding: 16px;
+  }
+
+  .parent-stat {
+    padding: 13px;
+  }
+
+  .parent-stat strong {
+    font-size: 18px;
+  }
+
+}
+
+
+/* COLLEGE PARENT — PROGRESS REPORT */
+
+.college-parent-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.college-parent-metric {
+  min-width: 0;
+  padding: 15px 10px;
+  border-radius: 13px;
+  background: #edf5ff;
+}
+
+.college-parent-metric:nth-child(2) {
+  background: #e8f8ee;
+}
+
+.college-parent-metric:nth-child(3) {
+  background: #fff0e4;
+}
+
+.college-parent-metric span {
+  display: block;
+  font-size: 9px;
+  color: #64748b;
+  font-weight: 700;
+}
+
+.college-parent-metric strong {
+  display: block;
+  margin-top: 9px;
+  font-size: 21px;
+  color: #172b46;
+}
+
+.college-parent-semester {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 15px;
+  padding: 18px;
+  margin-bottom: 14px;
+}
+
+.college-parent-semester-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 17px;
+  border-bottom: 1px solid #eef2f7;
+}
+
+.college-parent-semester-head h3 {
+  font-size: 15px;
+  color: #172b46;
+}
+
+.college-parent-semester-head p {
+  margin-top: 5px;
+  font-size: 10px;
+  color: #94a3b8;
+}
+
+.college-parent-semester-scores {
+  display: flex;
+  gap: 15px;
+  text-align: right;
+}
+
+.college-parent-semester-scores span {
+  display: block;
+  font-size: 9px;
+  color: #94a3b8;
+}
+
+.college-parent-semester-scores strong {
+  display: block;
+  margin-top: 5px;
+  font-size: 20px;
+  color: #172b46;
+}
+
+.college-parent-subject-head,
+.college-parent-subject {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 2fr)
+    minmax(0, 1fr)
+    35px
+    45px
+    30px;
+  gap: 7px;
+  align-items: center;
+}
+
+.college-parent-subject-head {
+  padding: 15px 0 9px;
+  color: #94a3b8;
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.college-parent-subject {
+  padding: 12px 0;
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 11px;
+}
+
+.college-parent-subject-name {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.college-parent-pass {
+  color: #15803d;
+}
+
+.college-parent-fail {
+  color: #dc2626;
+}
+
+.college-parent-semester-total {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 12px;
+  font-size: 12px;
+}
+
+.college-parent-semester-total span {
+  color: #64748b;
+}
+
+@media (max-width: 600px) {
+
+  .college-parent-summary {
+    gap: 7px;
+  }
+
+  .college-parent-metric {
+    padding: 12px 8px;
+  }
+
+  .college-parent-metric span {
+    font-size: 8px;
+  }
+
+  .college-parent-metric strong {
+    font-size: 17px;
+  }
+
+  .college-parent-semester {
+    padding: 13px;
+  }
+
+  .college-parent-semester-head {
+    flex-wrap: wrap;
+  }
+
+  .college-parent-semester-scores {
+    width: 100%;
+    justify-content: flex-start;
+    text-align: left;
+  }
+
+  .college-parent-subject-head,
+  .college-parent-subject {
+    grid-template-columns:
+      minmax(0, 1.5fr)
+      minmax(0, 1fr)
+      25px
+      35px
+      22px;
+    gap: 5px;
+    font-size: 9px;
+  }
+
+  .college-parent-subject-head {
+    font-size: 8px;
+  }
+
+}
+
+/* SIX SMALL CARDS */
+
+.parent-quick-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  width: 100%;
+  margin: 12px 0 24px;
+}
+
+.parent-quick-card {
+  width: 100%;
+  min-width: 0;
+  height: 105px;
+  min-height: 0;
+  padding: 12px;
+  border: 0;
+  border-radius: 14px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  text-align: left;
+  cursor: pointer;
+  box-shadow: none;
+}
+
+.parent-card-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 15px;
+  background: rgba(255,255,255,.65);
+}
+
+.parent-card-title {
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+/* CARD COLORS */
+
+.card-student {
+  background: #e4efff;
+  color: #2456a6;
+}
+
+.card-attendance {
+  background: #e0f6e9;
+  color: #167347;
+}
+
+.card-marks {
+  background: #fff0dc;
+  color: #a65b14;
+}
+
+.card-fees {
+  background: #f0e8ff;
+  color: #7442b4;
+}
+
+.card-documents {
+  background: #ffe7ed;
+  color: #ae3e60;
+}
+
+.card-progress {
+  background: #e0f4f7;
+  color: #217486;
+}
+
+.parent-quick-card:active {
+  transform: scale(.97);
+}
+
+@media (max-width: 480px) {
+  .parent-quick-cards {
+    gap: 8px;
+  }
+
+  .parent-quick-card {
+    height: 98px;
+    padding: 10px;
+  }
+
+  .parent-card-title {
+    font-size: 10px;
+  }
+}
+/* FINAL DASHBOARD OVERRIDES — keep existing markup and IDs */
+#dashboardPage .parent-quick-card{height:100px;min-height:100px;padding:11px 9px;}
+#dashboardPage .parent-card-link{display:none!important;}
+#dashboardPage .card-student{background:#e8f2ff;color:#1e40af;}
+#dashboardPage .card-attendance{background:#e8f8ee;color:#166534;}
+#dashboardPage .card-marks{background:#fff1e6;color:#9a3412;}
+#dashboardPage .card-fees{background:#f0e8ff;color:#6b21a8;}
+#dashboardPage .card-documents{background:#ffe8ef;color:#9d174d;}
+#dashboardPage .card-progress{background:#e0f4f7;color:#155e75;}
+@media(max-width:600px){#dashboardPage .parent-quick-card{height:95px;min-height:95px;padding:10px 8px;}}
+
+
+/* ==========================================
+   MOVING STUDY CARDS
+   NON CLICKABLE — APP ONLY
+   ========================================== */
+
+.study-moving-strip {
+  width: 100%;
+  overflow: hidden;
+
+  margin: 0 0 18px;
+  padding: 8px 0;
+
+  background: transparent;
+
+  pointer-events: none;
+  user-select: none;
+}
+
+.study-moving-track {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+  width: max-content;
+
+  animation: studyCardsMove 24s linear infinite;
+}
+
+/* CARD */
+
+.study-moving-card {
+  flex: 0 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 9px;
+
+  min-width: 150px;
+  height: 54px;
+
+  padding: 0 16px;
+
+  border-radius: 13px;
+  border: 1px solid #dce8f5;
+
+  background: #eaf3ff;
+  color: #022e5b;
+
+  font-size: 12px;
+  font-weight: 800;
+
+  white-space: nowrap;
+
+  pointer-events: none;
+  cursor: default;
+}
+
+/* ICON */
+
+.study-moving-card i {
+  font-size: 17px;
+  color: #2876b9;
+}
+
+/* DIFFERENT LIGHT COLORS */
+
+.study-moving-card:nth-child(5n + 2) {
+  background: #e8f8ee;
+  border-color: #d4efde;
+  color: #166534;
+}
+
+.study-moving-card:nth-child(5n + 2) i {
+  color: #15803d;
+}
+
+.study-moving-card:nth-child(5n + 3) {
+  background: #fff1e6;
+  border-color: #ffe1c9;
+  color: #9a4519;
+}
+
+.study-moving-card:nth-child(5n + 3) i {
+  color: #c45a1b;
+}
+
+.study-moving-card:nth-child(5n + 4) {
+  background: #f0e8ff;
+  border-color: #e4d4ff;
+  color: #6b21a8;
+}
+
+.study-moving-card:nth-child(5n + 4) i {
+  color: #7e22ce;
+}
+
+.study-moving-card:nth-child(5n + 5) {
+  background: #ffe8ef;
+  border-color: #ffd4e2;
+  color: #9d174d;
+}
+
+.study-moving-card:nth-child(5n + 5) i {
+  color: #be185d;
+}
+
+/* SMOOTH INFINITE MOVEMENT */
+
+@keyframes studyCardsMove {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(calc(-50% - 5px));
+  }
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+  .study-moving-strip {
+    margin-bottom: 14px;
+    padding: 6px 0;
+  }
+
+  .study-moving-track {
+    gap: 8px;
+    animation-duration: 20s;
+  }
+
+  .study-moving-card {
+    min-width: 130px;
+    height: 46px;
+
+    padding: 0 12px;
+    gap: 7px;
+
+    border-radius: 11px;
+    font-size: 10px;
+  }
+
+  .study-moving-card i {
+    font-size: 15px;
+  }
+
+  @keyframes studyCardsMove {
+    from {
+      transform: translateX(0);
+    }
+
+    to {
+      transform: translateX(calc(-50% - 4px));
+    }
+  }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .study-moving-track {
+    animation: none;
+  }
+}
+/* DASHBOARD LEFT - RIGHT FOG BACKGROUND */
+
+.app{
+    background:linear-gradient(
+        to right,
+        #9cd1f7b5 0%,
+        #f7fbff 50%,
+        #ffffff 100%
+    );
+}
+
+.content{
+    background:transparent !important;
+}
+
+
 </style>
 </head>
 <body>
@@ -690,6 +1710,7 @@ button{cursor:pointer}
 </section>
 
 <div class="app" id="app">
+  
  <header class="topbar">
   <div class="inst">
    <img id="institutionLogo" style="display:none">
@@ -700,38 +1721,202 @@ button{cursor:pointer}
  </header>
 
  <main class="content">
-  <div class="child-switch">
-   <label>Viewing student</label>
-   <select id="childSelect" onchange="selectChild(this.value)"></select>
+  
+<!-- NON-CLICKABLE MOVING STUDY CARDS -->
+<div class="study-moving-strip" aria-label="Study highlights">
+
+  <div class="study-moving-track">
+
+    <div class="study-moving-card">
+      <i class="fa-solid fa-book-open"></i>
+      <span>Keep Learning</span>
+    </div>
+
+    <div class="study-moving-card">
+      <i class="fa-solid fa-graduation-cap"></i>
+      <span>Dream Big</span>
+    </div>
+
+    <div class="study-moving-card">
+      <i class="fa-solid fa-pencil"></i>
+      <span>Practice Daily</span>
+    </div>
+
+    <div class="study-moving-card">
+      <i class="fa-solid fa-award"></i>
+      <span>Achieve More</span>
+    </div>
+
+    <div class="study-moving-card">
+      <i class="fa-solid fa-lightbulb"></i>
+      <span>Stay Curious</span>
+    </div>
+
+    <!-- SAME CARDS REPEATED FOR SMOOTH LOOP -->
+
+    <div class="study-moving-card" aria-hidden="true">
+      <i class="fa-solid fa-book-open"></i>
+      <span>Keep Learning</span>
+    </div>
+
+    <div class="study-moving-card" aria-hidden="true">
+      <i class="fa-solid fa-graduation-cap"></i>
+      <span>Dream Big</span>
+    </div>
+
+    <div class="study-moving-card" aria-hidden="true">
+      <i class="fa-solid fa-pencil"></i>
+      <span>Practice Daily</span>
+    </div>
+
+    <div class="study-moving-card" aria-hidden="true">
+      <i class="fa-solid fa-award"></i>
+      <span>Achieve More</span>
+    </div>
+
+    <div class="study-moving-card" aria-hidden="true">
+      <i class="fa-solid fa-lightbulb"></i>
+      <span>Stay Curious</span>
+    </div>
+
   </div>
 
-  <section class="page active" id="dashboardPage">
-    <div id="parentWelcome" class="parent-welcome"></div>
-   <div id="studentHero"></div>
-   <div class="stats">
-    <div class="stat"><span>ATTENDANCE</span><strong id="attendanceStat">—</strong></div>
-    <div class="stat"><span>PENDING FEES</span><strong id="feeStat">₹0</strong></div>
-   </div>
-   <div class="section"><h2>Student Details</h2><div id="profileSummary"></div></div>
-  </section>
+</div>
 
-  <section class="page" id="attendancePage"><div class="section"><h2>Attendance</h2><div id="attendanceList"></div></div></section>
-  <section class="page" id="feesPage"><div class="section"><h2>Fees</h2><div id="feesList"></div></div></section>
-   <section class="page" id="progressPage">
-    <div class="section">
-      <h2>Progress Report</h2>
-      <div id="progressContent"></div>
-    </div>
-   </section>
+  <!-- Required for student data loading; hidden from UI -->
+  <select
+    id="childSelect"
+    onchange="selectChild(this.value)"
+    style="display:none"
+    aria-label="Selected student"
+  ></select>
 
-   <section class="page" id="documentsPage">
-    <div class="documents-page-title">
-      <h2>Required Documents</h2>
-      <span class="documents-badge" id="documentsBadge">Checking...</span>
-    </div>
-    <div class="documents-list" id="documentsList"></div>
-   </section>
- </main>
+
+<section class="page active" id="dashboardPage">
+  <div id="parentWelcome" class="parent-welcome"></div>
+  <div id="studentHero"></div>
+  <div class="parent-dashboard-stats" aria-label="Student overview">
+    <div class="parent-stat"><span>ATTENDANCE</span><strong id="attendanceStat">—</strong></div>
+    <div class="parent-stat"><span>PENDING FEES</span><strong id="feeStat">₹0</strong></div>
+  </div>
+  
+<!-- SIX SMALL CARDS — TWO ROWS -->
+
+<div class="parent-quick-cards">
+
+  <!-- FIRST ROW -->
+
+  <button
+    type="button"
+    class="parent-quick-card card-student"
+    onclick="openPage('studentDetails')"
+  >
+    <span class="parent-card-icon">
+      <i class="fa-solid fa-user-graduate"></i>
+    </span>
+
+    <span class="parent-card-title">
+      Student Details
+    </span>
+  </button>
+
+  <button
+    type="button"
+    class="parent-quick-card card-attendance"
+    onclick="openPage('attendance')"
+  >
+    <span class="parent-card-icon">
+      <i class="fa-solid fa-calendar-check"></i>
+    </span>
+
+    <span class="parent-card-title">
+      Attendance
+    </span>
+  </button>
+
+  <button
+    type="button"
+    class="parent-quick-card card-marks"
+    onclick="openPage('progress')"
+  >
+    <span class="parent-card-icon">
+      <i class="fa-solid fa-chart-line"></i>
+    </span>
+
+    <span class="parent-card-title">
+      Marks
+    </span>
+  </button>
+
+  <!-- SECOND ROW -->
+
+  <button
+    type="button"
+    class="parent-quick-card card-fees"
+    onclick="openPage('fees')"
+  >
+    <span class="parent-card-icon">
+      <i class="fa-solid fa-wallet"></i>
+    </span>
+
+    <span class="parent-card-title">
+      Fees
+    </span>
+  </button>
+
+  <button
+    type="button"
+    class="parent-quick-card card-documents"
+    onclick="openPage('documents')"
+  >
+    <span class="parent-card-icon">
+      <i class="fa-solid fa-file-lines"></i>
+    </span>
+
+    <span class="parent-card-title">
+      Documents
+    </span>
+  </button>
+
+  <button
+    type="button"
+    class="parent-quick-card card-progress"
+    onclick="openPage('progress')"
+  >
+    <span class="parent-card-icon">
+      <i class="fa-solid fa-graduation-cap"></i>
+    </span>
+
+    <span class="parent-card-title">
+      Progress
+    </span>
+  </button>
+
+</div>
+  
+</section>
+<section class="page" id="studentDetailsPage">
+  <button type="button" class="parent-back-btn" onclick="openPage('dashboard',document.querySelector('.bottom .nav'))"><i class="fa-solid fa-arrow-left"></i> Back to Dashboard</button>
+  <div class="parent-inner-card"><h2>Student Details</h2><div id="profileSummary"></div></div>
+</section>
+<section class="page" id="attendancePage">
+  <button type="button" class="parent-back-btn" onclick="openPage('dashboard',document.querySelector('.bottom .nav'))"><i class="fa-solid fa-arrow-left"></i> Back to Dashboard</button>
+  <div class="parent-inner-card"><h2>Attendance</h2><div id="attendanceList"></div></div>
+</section>
+<section class="page" id="feesPage">
+  <button type="button" class="parent-back-btn" onclick="openPage('dashboard',document.querySelector('.bottom .nav'))"><i class="fa-solid fa-arrow-left"></i> Back to Dashboard</button>
+  <div class="parent-inner-card"><h2>Fees</h2><div id="feesList"></div></div>
+</section>
+<section class="page" id="progressPage">
+  <button type="button" class="parent-back-btn" onclick="openPage('dashboard',document.querySelector('.bottom .nav'))"><i class="fa-solid fa-arrow-left"></i> Back to Dashboard</button>
+  <div class="parent-inner-card"><h2>Progress Report</h2><div id="progressContent"></div></div>
+</section>
+<section class="page" id="documentsPage">
+  <button type="button" class="parent-back-btn" onclick="openPage('dashboard',document.querySelector('.bottom .nav'))"><i class="fa-solid fa-arrow-left"></i> Back to Dashboard</button>
+  <div class="documents-page-title"><h2>Required Documents</h2><span class="documents-badge" id="documentsBadge">Checking...</span></div>
+  <div class="documents-list" id="documentsList"></div>
+</section>
+</main>
 
  <nav class="bottom">
    <button class="nav active" onclick="openPage('dashboard',this)">
@@ -858,8 +2043,9 @@ async function loadStudentData(){
    db.from("student_fees").select("*").eq("institution_id",iid).eq("student_id",sid).order("created_at",{ascending:false}),
    db.from("student_marks").select("*").eq("institution_id",iid).eq("student_id",sid).order("exam_date",{ascending:false})
  ]);
- if(a.error)console.error(a.error); if(f.error)console.error(f.error); if(m.error)console.error(m.error);
+ if(a.error)console.error(a.error); if(f.error)console.error(f.error); if(m.error)console.error("Student marks query failed:",m.error);
  attendanceRows=a.data||[];feeRows=f.data||[];markRows=m.data||[];
+  window.parentMarksLoadError=m.error?.message||null;
  renderAll();
 }
 
@@ -1133,28 +2319,18 @@ function stopDocumentsRealtime(){
 
 
 function openPage(name,btn){
- document.querySelectorAll(".page").forEach(p=>{
-   p.classList.remove("active");
-   p.style.display="";
- });
- document.querySelectorAll(".nav").forEach(b=>b.classList.remove("active"));
+ document.querySelectorAll(".page").forEach(p=>{p.classList.remove("active");p.style.display="";});
+ document.querySelectorAll(".bottom .nav").forEach(b=>b.classList.remove("active"));
  const page=$(name+"Page");
- if(page) page.classList.add("active");
- if(btn) btn.classList.add("active");
+ if(!page){console.error("Page not found:",name);return;}
+ page.classList.add("active");
+ const nav=btn || document.querySelector(`.bottom .nav[onclick*="'${name}'"]`);
+ if(nav)nav.classList.add("active");
+ if(name==="progress")renderProgressReport();
+ if(name==="documents")loadRequiredDocuments();
+ window.scrollTo(0,0);
 }
-
-function openProgressPage(btn){
- document.querySelectorAll(".page").forEach(p=>{
-   p.classList.remove("active");
-   p.style.display="";
- });
- document.querySelectorAll(".nav").forEach(b=>b.classList.remove("active"));
- const page=$("progressPage");
- if(page) page.classList.add("active");
- if(btn) btn.classList.add("active");
- renderProgressReport();
-}
-
+function openProgressPage(btn){openPage("progress",btn);}
 function startRealtime(){
  if(liveChannel)db.removeChannel(liveChannel);
  const iid=currentStudent.institution_id,sid=currentStudent.student_id;
@@ -1230,110 +2406,548 @@ function parentGrade(p){
   return "F";
 }
 
-async function renderProgressReport(){
-  const box=document.getElementById("progressContent");
-  if(!box)return;
 
-  const s=currentStudent;
-  if(!s){
-    box.innerHTML='<div class="notice">Student details not available.</div>';
+/* ============================================
+   COLLEGE PARENT — SGPA / CGPA PROGRESS REPORT
+   ============================================ */
+
+function parentSemesterNumber(examName) {
+  const value = String(examName || "").trim().toLowerCase();
+
+  let match = value.match(
+    /\b(?:semester|sem)\s*[-_:]?\s*(\d+)\b/i
+  );
+
+  if (match) return Number(match[1]);
+
+  match = value.match(/(\d+)/);
+
+  return match ? Number(match[1]) : null;
+}
+
+function parentCollegeGrade(percentage) {
+  const p = Number(percentage) || 0;
+
+  if (p >= 90) return { point: 10, grade: "O" };
+  if (p >= 80) return { point: 9, grade: "A+" };
+  if (p >= 70) return { point: 8, grade: "A" };
+  if (p >= 60) return { point: 7, grade: "B+" };
+  if (p >= 50) return { point: 6, grade: "B" };
+  if (p >= 40) return { point: 5, grade: "C" };
+
+  return { point: 0, grade: "F" };
+}
+
+async function renderProgressReport() {
+
+  const box = document.getElementById("progressContent");
+
+  if (!box) return;
+
+  const s = currentStudent;
+
+  if (!s) {
+    box.innerHTML = `
+      <div class="progress-empty">
+        Student details not available.
+      </div>
+    `;
     return;
   }
 
-  const name=esc(s.student_name||"Student");
-  const cls=esc(s.class_course||"-");
-  const section=esc(s.section_year||"-");
-  const rows=Array.isArray(markRows) ? markRows : [];
+  const rows = Array.isArray(markRows) ? markRows : [];
+  if(window.parentMarksLoadError){box.innerHTML=`<div class="progress-empty">Marks could not load: ${esc(window.parentMarksLoadError)}</div>`;return;}
 
-  const getExam = r => r.exam_name || r.exam || r.exam_title || "Exam";
-  const getSubject = r => r.subject || r.subject_name || r.subject_title || "Subject";
-  const getObtained = r => Number(
-    r.obtained_marks ?? r.marks_obtained ?? r.marks ?? r.mark ?? 0
+  const name = esc(s.student_name || "Student");
+  const course = esc(s.class_course || "—");
+  const year = esc(s.section_year || "—");
+  const roll = esc(s.roll_number || "—");
+
+  const avatar = s.student_photo
+    ? `
+      <img
+        class="progress-profile-circle"
+        src="${esc(s.student_photo)}"
+        alt="Student"
+      >
+    `
+    : `
+      <div class="progress-profile-circle">
+        ${esc(
+          (s.student_name || "S")
+            .charAt(0)
+            .toUpperCase()
+        )}
+      </div>
+    `;
+
+  const getExam = r =>
+    r.exam_name ||
+    r.exam ||
+    r.exam_title ||
+    "Exam";
+
+  const getSubject = r =>
+    r.subject ||
+    r.subject_name ||
+    r.subject_title ||
+    "Subject";
+
+  const getObtained = r =>
+    Number(
+      r.obtained_marks ??
+      r.marks_obtained ??
+      r.marks ??
+      r.mark ??
+      0
+    );
+
+  const getMax = r =>
+    Number(
+      r.max_marks ??
+      r.maximum_marks ??
+      r.total_marks ??
+      r.max_mark ??
+      0
+    );
+
+  const examMap = new Map();
+
+  rows.forEach(row => {
+
+    const examName = getExam(row);
+
+    if (!examMap.has(examName)) {
+      examMap.set(examName, []);
+    }
+
+    examMap.get(examName).push(row);
+
+  });
+
+  /* Semester 1, Semester 2, Semester 3... */
+
+  const examEntries = [...examMap.entries()];
+
+  examEntries.sort((a, b) => {
+
+    const semA = parentSemesterNumber(a[0]);
+    const semB = parentSemesterNumber(b[0]);
+
+    if (semA !== null && semB !== null) {
+      return semA - semB;
+    }
+
+    if (semA !== null) return -1;
+    if (semB !== null) return 1;
+
+    const dateA =
+      a[1].find(r => r.exam_date)?.exam_date || "";
+
+    const dateB =
+      b[1].find(r => r.exam_date)?.exam_date || "";
+
+    return String(dateA).localeCompare(String(dateB));
+
+  });
+
+  /* Count each semester SGPA only once */
+
+  const semesterResults = examEntries.map(
+    ([examName, examRows]) => {
+
+      const sgpaRow = examRows.find(
+        r =>
+          r.sgpa !== null &&
+          r.sgpa !== undefined &&
+          r.sgpa !== ""
+      );
+
+      const sgpa = sgpaRow
+        ? Number(sgpaRow.sgpa)
+        : null;
+
+      const validSGPA =
+        sgpa !== null &&
+        Number.isFinite(sgpa);
+
+      const obtained = examRows.reduce(
+        (sum, row) => sum + getObtained(row),
+        0
+      );
+
+      const maximum = examRows.reduce(
+        (sum, row) => sum + getMax(row),
+        0
+      );
+
+      const percentage = maximum
+        ? obtained / maximum * 100
+        : 0;
+
+      const date =
+        examRows.find(r => r.exam_date)
+          ?.exam_date || "";
+
+      return {
+        examName,
+        examRows,
+        date,
+        sgpa: validSGPA ? sgpa : null,
+        obtained,
+        maximum,
+        percentage
+      };
+
+    }
   );
-  const getMax = r => Number(
-    r.max_marks ?? r.maximum_marks ?? r.total_marks ?? r.max_mark ?? 0
-  );
 
+  /* TOTAL CGPA =
+     sum of available semester SGPAs
+     divided by number of those semesters
+  */
 
-  const avatar=s.student_photo
-    ? `<img class="progress-profile-circle" src="${esc(s.student_photo)}" alt="Student">`
-    : `<div class="progress-profile-circle">${esc((s.student_name||"S").charAt(0).toUpperCase())}</div>`;
+  const validSGPAs = semesterResults
+    .map(result => result.sgpa)
+    .filter(value => Number.isFinite(value));
 
-  const exams=[...new Set(rows.map(getExam))];
+  const totalCGPA = validSGPAs.length
+    ? validSGPAs.reduce(
+        (sum, value) => sum + value,
+        0
+      ) / validSGPAs.length
+    : null;
 
-  box.innerHTML=`
+  const latestResult =
+    semesterResults.length
+      ? semesterResults[semesterResults.length - 1]
+      : null;
+
+  const latestSGPA =
+    latestResult?.sgpa !== null &&
+    latestResult?.sgpa !== undefined
+      ? latestResult.sgpa.toFixed(2)
+      : "—";
+
+  const totalCGPAText =
+    totalCGPA !== null
+      ? totalCGPA.toFixed(2)
+      : "—";
+
+  /* RENDER REPORT */
+
+  box.innerHTML = `
+
     <div class="progress-page-wrap">
+
+      <!-- STUDENT PROFILE -->
+
       <div class="progress-top">
+
         <div class="progress-student">
+
           ${avatar}
+
           <div>
+
             <h3>${name}</h3>
-            <p>${cls} · ${section}</p>
+
+            <p>${course} · ${year}</p>
+
+            <p>Roll No: ${roll}</p>
+
           </div>
+
         </div>
 
-        <div class="progress-summary">
-          <div>
-            <span>EXAMS</span>
-            <strong>${exams.length}</strong>
+        <!-- COLLEGE RESULT SUMMARY -->
+
+        <div class="college-parent-summary">
+
+          <div class="college-parent-metric">
+
+            <span>SEMESTERS</span>
+
+            <strong>
+              ${semesterResults.length}
+            </strong>
+
           </div>
-          <div>
-            <span>SUBJECTS</span>
-            <strong>${rows.length}</strong>
+
+          <div class="college-parent-metric">
+
+            <span>LATEST SGPA</span>
+
+            <strong>
+              ${latestSGPA}
+            </strong>
+
           </div>
-          <div>
-            <span>RESULTS</span>
-            <strong>${rows.length ? "Available" : "—"}</strong>
+
+          <div class="college-parent-metric">
+
+            <span>TOTAL CGPA</span>
+
+            <strong>
+              ${totalCGPAText}
+            </strong>
+
           </div>
+
         </div>
+
       </div>
 
-      <div class="progress-section-title">Examination Results</div>
+      <div class="progress-section-title">
+        Semester Results
+      </div>
 
       ${
-        !rows.length
-        ? `<div class="progress-empty">No examination results available yet.</div>`
-        : exams.map(exam=>{
-            const examRows=rows.filter(r=>getExam(r)===exam);
-            const examObtained=examRows.reduce((sum,r)=>sum+getObtained(r),0);
-            const examMax=examRows.reduce((sum,r)=>sum+getMax(r),0);
-            const examPct=examMax ? (examObtained/examMax)*100 : 0;
+
+        !semesterResults.length
+
+        ? `
+
+          <div class="progress-empty">
+
+            No semester results available yet.
+
+          </div>
+
+        `
+
+        : semesterResults.map(
+          (result, index) => {
+
+            const isLatest =
+              index === semesterResults.length - 1;
+
+            const sgpaText =
+              result.sgpa !== null
+                ? result.sgpa.toFixed(2)
+                : "—";
 
             return `
-              <div class="progress-exam">
-                <div class="progress-exam-head">
-                  <strong>${esc(exam)}</strong>
-                  <span class="progress-exam-badge">
-                    ${examMax ? "Total "+examObtained+" · "+examPct.toFixed(1)+"%" : "Marks"}
-                  </span>
-                </div>
 
-                ${examRows.map(r=>{
-                  const obtained=getObtained(r);
-                  const max=getMax(r);
-                  const pct=max ? (obtained/max)*100 : 0;
+              <div class="college-parent-semester">
 
-                  return `
-                    <div class="progress-subject">
-                      <span>${esc(getSubject(r))}</span>
-                      <span>${obtained}${max ? " / "+max : ""}</span>
-                      <span>${max ? pct.toFixed(1)+"%" : "—"}</span>
+                <!-- SEMESTER HEADER -->
+
+                <div class="college-parent-semester-head">
+
+                  <div>
+
+                    <h3>
+                      ${esc(result.examName)}
+                    </h3>
+
+                    ${
+                      result.date
+                        ? `
+                          <p>
+                            ${esc(result.date)}
+                          </p>
+                        `
+                        : ""
+                    }
+
+                  </div>
+
+                  <div class="college-parent-semester-scores">
+
+                    <div>
+
+                      <span>SGPA</span>
+
+                      <strong>
+                        ${sgpaText}
+                      </strong>
+
                     </div>
-                  `;
-                }).join("")}
 
-                <div class="progress-exam-total">
-                  <span>Total</span>
-                  <span>${examObtained} · ${examMax ? examPct.toFixed(1)+"%" : "—"} · Grade ${examMax ? parentGrade(examPct) : "—"}</span>
+                    ${
+                      isLatest
+
+                        ? `
+
+                          <div>
+
+                            <span>TOTAL CGPA</span>
+
+                            <strong>
+                              ${totalCGPAText}
+                            </strong>
+
+                          </div>
+
+                        `
+
+                        : ""
+                    }
+
+                  </div>
+
                 </div>
-              </div>
-            `;
-          }).join("")
-      }
-    </div>
-  `;
-}
 
+                <!-- SUBJECT-WISE RESULTS -->
+
+                <div class="college-parent-subject-head">
+
+                  <span>SUBJECT</span>
+
+                  <span>MARKS</span>
+
+                  <span>GP</span>
+
+                  <span>GRADE</span>
+
+                  <span>CR</span>
+
+                </div>
+
+                ${
+
+                  result.examRows.map(row => {
+
+                    const obtained =
+                      getObtained(row);
+
+                    const maximum =
+                      getMax(row);
+
+                    const percentage =
+                      maximum
+                        ? obtained / maximum * 100
+                        : 0;
+
+                    const calculated =
+                      parentCollegeGrade(
+                        percentage
+                      );
+
+                    const hasStoredPoint =
+                      row.grade_point !== null &&
+                      row.grade_point !== undefined &&
+                      row.grade_point !== "";
+
+                    const gradePoint =
+                      hasStoredPoint
+                        ? Number(row.grade_point)
+                        : calculated.point;
+
+                    const grade =
+                      row.grade ||
+                      calculated.grade;
+
+                    const credits =
+                      Number(row.credits || 0);
+
+                    return `
+
+                      <div class="college-parent-subject">
+
+                        <span class="college-parent-subject-name">
+
+                          ${esc(getSubject(row))}
+
+                        </span>
+
+                        <span>
+
+                          ${obtained}
+                          /
+                          ${maximum}
+
+                        </span>
+
+                        <span>
+
+                          ${gradePoint}
+
+                        </span>
+
+                        <span>
+
+                          <b class="${
+                            grade === "F"
+                              ? "college-parent-fail"
+                              : "college-parent-pass"
+                          }">
+
+                            ${esc(grade)}
+
+                          </b>
+
+                        </span>
+
+                        <span>
+
+                          ${credits}
+
+                        </span>
+
+                      </div>
+
+                    `;
+
+                  }).join("")
+
+                }
+
+                <!-- SEMESTER TOTAL -->
+
+                <div class="college-parent-semester-total">
+
+                  <span>
+
+                    Total Marks
+
+                  </span>
+
+                  <strong>
+
+                    ${result.obtained}
+                    /
+                    ${result.maximum}
+
+                  </strong>
+
+                </div>
+
+                <div class="college-parent-semester-total">
+
+                  <span>
+
+                    Percentage
+
+                  </span>
+
+                  <strong>
+
+                    ${
+                      result.maximum
+                        ? result.percentage.toFixed(1) + "%"
+                        : "—"
+                    }
+
+                  </strong>
+
+                </div>
+
+              </div>
+
+            `;
+
+          }
+        ).join("")
+
+      }
+
+    </div>
+
+  `;
+
+}
 function loadParentProgressMarks(){
   const box=document.getElementById("progressExamResults");
   if(!box) return;
